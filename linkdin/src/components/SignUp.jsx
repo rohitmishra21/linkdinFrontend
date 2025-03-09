@@ -4,6 +4,7 @@ import axios from "axios"
 import { useDispatch } from 'react-redux'
 import { setUser } from '../utils/userSlice'
 import { BASE_URL } from '../utils/consfig'
+import Error from './Error'
 
 const SignUp = () => {
 
@@ -13,17 +14,17 @@ const SignUp = () => {
     const [lastName, setLasttName] = useState("Mishra")
     const [email, setEmail] = useState("rohit@gmail.com")
     const [password, setPassword] = useState("rohitMishra@123")
+    const [err, seterr] = useState("")
 
     async function signUpHendler() {
         try {
-            const res = await axios.post(BASE_URL + "signUp", { firstName, lastName, email, password }, { withCridential: true })
+            const res = await axios.post(BASE_URL + "signUp", { firstName, lastName, email, password }, { withCredentials: true })
             dispatch(setUser(res.data))
             alert("user created")
             navigate("/signin")
 
-
         } catch (err) {
-            console.log(err.response.data.message || " somethig went wrong");
+            seterr(err.response.data.message || " somethig went wrong");
 
         }
 
@@ -48,6 +49,7 @@ const SignUp = () => {
                 <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></g></svg>
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" required placeholder="Password" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must be more than 8 characters, including number, lowercase letter, uppercase letter" />
             </label>
+            <Error msg={err} />
             <button onClick={signUpHendler} className="btn input  bg-primary btn-active btn-primary cursor-pointer ">Sign Up</button>
             <button className='text-black'>already have acount?<Link to="/signin" className='text-primary font-bold text-xs ml-2'>Sign in</Link></button>
         </div>

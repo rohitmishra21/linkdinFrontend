@@ -6,16 +6,20 @@ import Connection from './components/Connection'
 import Signin from './components/Signin'
 import SignUp from './components/SignUp'
 import store from './utils/store'
+import Profile from './components/Profile'
+import Home from './components/Home'
+import HomeBody from './components/HomeBody'
 const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter >
         <Routes>
-          <Route path='/' element={<Body />} >
-            <Route path='/connection' element={<Connection />} />
+          <Route path="/" element={<Home />}>
+            <Route index element={<HomeBody />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/signup" element={<SignUp />} />
           </Route>
-          <Route path='/signin' element={<Signin />} />
-          <Route path='/signup' element={<SignUp />} />
+
         </Routes>
       </BrowserRouter>
     </Provider>

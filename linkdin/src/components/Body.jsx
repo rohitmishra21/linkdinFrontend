@@ -7,7 +7,6 @@ function Body() {
         <div>
             <Nav />
             <Outlet />
-
         </div>
     )
 }

@@ -1,7 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { BASE_URL } from '../utils/consfig';
+import axios from 'axios';
 
 const Nav = () => {
+
+    const navigate = useNavigate()
+
+    async function logOutHendller() {
+
+        const res = await axios.post(BASE_URL + "logOut", {}, { withCredentials: true })
+        navigate("/signUp")
+
+    }
     return (
         <div>
             <div className="navbar bg-base-100 px-20 flex justify-between shadow-sm">
@@ -32,7 +43,7 @@ const Nav = () => {
                                 </Link>
                             </li>
                             <li><Link to="/signUp">SignUp</Link></li>
-                            <li><a>Signout</a></li>
+                            <li onClick={logOutHendller}><Link>Signout</Link></li>
                         </ul>
                     </div>
                 </div>
